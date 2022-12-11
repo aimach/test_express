@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 const express = require("express");
-const { hashPassword } = require("./auth.js");
+const { hashPassword, verifyPassword } = require("./auth.js");
 const { validateMovie, validateUser } = require('./validator.js')
 
 const app = express();
@@ -35,7 +35,7 @@ app.put('/api/users/:id', validateUser, usersHandlers.updateUser);
 app.delete('/api/users/:id', usersHandlers.deleteUser);
 
 //handle login
-app.post('/api/login', loginHandlers.getLogin)
+app.post('/api/login', loginHandlers.getUserByEmailWiythPasswordAndPassToNext, verifyPassword)
 
 
 app.listen(port, (err) => {
